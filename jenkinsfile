@@ -16,16 +16,17 @@
                                bat "mvn package"
                             }
                             }
+                        
+                stage("Email"){
+                           steps{
+                              mail bcc: '', body: 'sample mail', cc: '', from: '', replyTo: '', subject: 'sample mail for jenkins', to: 'gopalrockz1997@gmail.com'
+                             
+                            }}            
                stage("deploy"){
                            steps{
                               input("Do you want to deploy?")
                               deploy adapters: [tomcat9(credentialsId: 'declarative-jenkins-deploy', path: '', url: 'http://localhost:9080')], contextPath: '/demo', war: '**/*.war'
                             }}
-                          
-                            stage("Email"){
-                           steps{
-                     
-                               mail bcc: '', body: 'sample mail', cc: '', from: '', replyTo: '', subject: 'sample mail for jenkins', to: 'gopalrockz1997@gmail.com' 
-                            }}
+                  
 }
 } 
