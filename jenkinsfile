@@ -16,11 +16,10 @@
                                bat "mvn package"
                             }
                             }
-               stage("Results"){
+               stage("deploy"){
                            steps{
-                              input("Do you want to capture results?")
-                               junit '**/target/surefire-reports/TEST-*.xml'
-                                archiveArtifacts 'target/*.jar'
+                              input("Do you want to deploy?")
+                              deploy adapters: [tomcat9(path: '', url: 'http://localhost:9080')], contextPath: '/demo', war: '**/*.war'
                             }}
 }
 }
