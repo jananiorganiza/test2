@@ -5,13 +5,16 @@
                            steps{
                                bat "mvn clean"
                             }
+                            }
               stage("Testing stage"){
                            steps{
                                bat "mvn test"
                             }
+                            }
                 stage("packaging stage"){
                            steps{
                                bat "mvn package"
-                            }}}
+                            }
+                            }
 }
-
+}
