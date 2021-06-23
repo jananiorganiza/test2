@@ -21,11 +21,11 @@
                               input("Do you want to deploy?")
                               deploy adapters: [tomcat9(path: '', url: 'http://localhost:9080')], contextPath: '/demo', war: '**/*.war'
                             }}
-                            mail bcc: '', body: 'sample mail', cc: '', from: '', replyTo: '', subject: 'sample mail for jenkins', to: 'gopalrockz1997@gmail.com'
+                          
                             stage("Email"){
                            steps{
                      
-                              deploy adapters: [tomcat9(path: '', url: 'http://localhost:9080')], contextPath: '/demo', war: '**/*.war'
+                               mail bcc: '', body: 'sample mail', cc: '', from: '', replyTo: '', subject: 'sample mail for jenkins', to: 'gopalrockz1997@gmail.com' 
                             }}
 }
-}
+} 
