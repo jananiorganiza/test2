@@ -19,7 +19,7 @@
                stage("deploy"){
                            steps{
                               input("Do you want to deploy?")
-                              deploy adapters: [tomcat9(path: '', url: 'http://localhost:9080')], contextPath: '/demo', war: '**/*.war'
+                              deploy adapters: [tomcat9(credentialsId: 'declarative-jenkins-deploy', path: '', url: 'http:localhost:9080')], contextPath: '/demo', war: '**/*.war'
                             }}
                           
                             stage("Email"){
