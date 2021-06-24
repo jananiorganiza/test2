@@ -7,4 +7,4 @@ source code polling in jenkins.
 
 editing code for webhooks
 
-editing for webhook and declarative pipeline
+editing for webhook and declarative pipeline.
