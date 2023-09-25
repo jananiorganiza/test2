@@ -28,7 +28,7 @@ steps:
     --repository Gopalakrishnan997/time-tracker \
     --github-url https://github.com \
     --github-auth $(GITHUB_PAT) \
-    --config-file .github/codeql/codeql-config.yml 
+    --config-file .github/workflows/codeql.yml 
   displayName: 'Initialize CodeQL Executable and create a CodeQL database'
   
 - script: |
