@@ -25,7 +25,7 @@ steps:
 
 - script: |
     ./codeql-runner-linux init \
-    --repository Gopalakrishnan997/ScanGHfromAzDO \
+    --repository Gopalakrishnan997/time-tracker \
     --github-url https://github.com \
     --github-auth $(GITHUB_PAT) \
     --config-file .github/codeql/codeql-config.yml 
@@ -33,7 +33,7 @@ steps:
   
 - script: |
     ./codeql-runner-linux analyze \
-    --repository Gopalakrishnan997/ScanGHfromAzDO \
+    --repository Gopalakrishnan997/time-tracker \
     --github-url https://github.com \
     --github-auth $(GITHUB_PAT) \
     --commit $(Build.SourceVersion) \
