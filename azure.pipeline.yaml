@@ -39,7 +39,12 @@ steps:
     --github-url https://github.com \
     --github-auth $(GITHUB_PAT) \
     --config-file .github/workflows/codeql.yml 
+      - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
   displayName: 'Initialize CodeQL Executable and create a CodeQL database'
+- script: |
+    ./codeql-runner-linux autobuild --language=java
+
   
 - script: |
     ./codeql-runner-linux analyze \
