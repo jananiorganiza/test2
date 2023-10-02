@@ -40,14 +40,15 @@ steps:
     --github-auth $(GITHUB_PAT) \
     --config-file .github/workflows/codeql.yml 
   displayName: 'Initialize CodeQL Executable and create a CodeQL database'
+
 - script: |
-    ./codeql-runner-linux autobuild --language=java
+    ./codeql-runner-linux autobuild \
     --repository Gopalakrishnan997/time-tracker \
     --github-url https://github.com \
     --github-auth $(GITHUB_PAT) \
     --config-file .github/workflows/codeql.yml 
+  displayName: 'Run CodeQL Autobuild'
 
-  
 - script: |
     ./codeql-runner-linux analyze \
     --repository Gopalakrishnan997/time-tracker \
