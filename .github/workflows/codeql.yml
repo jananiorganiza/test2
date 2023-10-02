@@ -51,10 +51,10 @@ jobs:
     - name: Authenticate with Azure DevOps
       run: |
         mkdir -p ~/.m2
-        echo "//pkgs.dev.azure.com/{organization}/{feed}/_packaging/{feed_name}/maven/v1" > ~/.m2/settings.xml
-        echo "<settings><servers><server><id>{feed_name}</id><username>{username}</username><password>${{secrets.AZURE_DEVOPS_TOKEN}}</password></server></servers></settings>" >> ~/.m2/settings.xml
+        echo "//pkgs.dev.azure.com/gkinfrastructureascode/java-springboot-maven/_packaging/test/maven/v1" > ~/.m2/settings.xml
+        echo "<settings><servers><server><id>test</id>gkinfrastructureascode{username}</username><password>6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq</password></server></servers></settings>" >> ~/.m2/settings.xml
       env:
-        AZURE_DEVOPS_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+        AZURE_DEVOPS_TOKEN: 6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq
       
     - name: Verify Maven settings
       run: cat ~/.m2/settings.xml
