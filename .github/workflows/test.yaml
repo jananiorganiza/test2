@@ -1,0 +1,29 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11' # Use the desired Java version
+
+      - name: Authenticate with Azure DevOps
+        run: echo "//pkgs.dev.azure.com/gkinfrastructureascode/java-springboot-maven/_packaging/test/maven/v1" > ~/.m2/settings.xml && echo "<servers><server><id>test</id><username>gkinfrastructureascode</username><password>6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq</password></server></servers>" >> ~/.m2/settings.xml
+        env:
+          AZURE_DEVOPS_TOKEN: 6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      # Add more steps for your deployment process
