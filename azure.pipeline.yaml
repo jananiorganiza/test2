@@ -14,11 +14,15 @@ steps:
     unzip codeql-linux64.zip
     chmod +x codeql
     mv codeql /usr/local/bin/
-    codeql --version
   displayName: 'Install CodeQL CLI'
 - script: |
-    # Verify CodeQL installation.
-    codeql --version
+    # Debug information
+    ls -la /usr/local/bin
+    echo $PATH
+  displayName: 'Debug Information'
+- script: |
+    # Use absolute path to CodeQL
+    /usr/local/bin/codeql --version
   displayName: 'Verify CodeQL Installation'
 
 - script: |
