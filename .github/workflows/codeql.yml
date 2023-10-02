@@ -48,6 +48,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Authenticate with Azure DevOps
+      run: echo "//pkgs.dev.azure.com/gkinfrastructureascode/java-springboot-maven/_packaging/test/maven/v1" > ~/.m2/settings.xml && echo "<servers><server><id>test</id><username>gkinfrastructureascode</username><password>6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq</password></server></servers>" >> ~/.m2/settings.xml
+      env:
+          AZURE_DEVOPS_TOKEN: 6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
