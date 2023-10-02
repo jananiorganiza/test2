@@ -9,12 +9,16 @@ pool:
 
 steps:
 - script: |
-    # Download and install the CodeQL CLI (assuming you have the CodeQL tools available).
+    # Download and install the CodeQL CLI.
     wget https://github.com/github/codeql-cli-binaries/releases/latest/download/codeql-linux64.zip
     unzip codeql-linux64.zip
     chmod +x codeql
     mv codeql /usr/local/bin/
   displayName: 'Install CodeQL CLI'
+- script: |
+    # Verify CodeQL installation.
+    codeql --version
+  displayName: 'Verify CodeQL Installation'
 
 - script: |
     # Initialize the CodeQL database for Java.
