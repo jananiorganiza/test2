@@ -1,59 +1,58 @@
-# Scan my node app for semantic vulnerabilities with GitHub Code Scanning
-# Upload any vulnerabilities back into my GitHub Repo for developer review.
-
 trigger:
-- master
+- main  # Replace with your main branch name
+
+pr:
+- '*'
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-# - task: NodeTool@0
-#   inputs:
-#     versionSpec: '10.x'
-#   displayName: 'Install Node.js'
-
-# - script: |
-#      npm install
-#   displayName: 'npm install and test'
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+- script: |
+    # Download and install the CodeQL CLI (assuming you have the CodeQL tools available).
+    wget https://github.com/github/codeql-cli-binaries/releases/latest/download/codeql-linux64.zip
+    unzip codeql-linux64.zip
+    chmod +x codeql
+    mv codeql /usr/local/bin/
+  displayName: 'Install CodeQL CLI'
 
 - script: |
-    # wget https://github.com/github/codeql-action/releases/latest/download/codeql-runner-linux
-    wget https://github.com/github/codeql-action/releases/download/codeql-bundle-20200826/codeql-runner-linux
-    chmod +x codeql-runner-linux
-  displayName: 'Get latest CodeQL package. Install on Agent.'
+    # Initialize the CodeQL database for Java.
+    codeql database init --language java --source-root . --begin-tracing db
+  displayName: 'Initialize CodeQL database'
 
 - script: |
-    ./codeql-runner-linux init \
-    --repository Gopalakrishnan997/time-tracker \
-    --github-url https://github.com \
-    --github-auth $(GITHUB_PAT) \
-    --config-file .github/workflows/codeql.yml 
-  displayName: 'Initialize CodeQL Executable and create a CodeQL database'
+    # Run any pre-build tasks, for example, building your Java project.
+    mvn clean install  # Replace with your build commands
+  displayName: 'Build Java Project'
 
 - script: |
-    ./codeql-runner-linux autobuild \
-    --repository Gopalakrishnan997/time-tracker \
-    --github-url https://github.com \
-    --github-auth $(GITHUB_PAT) \
-    --config-file .github/workflows/codeql.yml 
-  displayName: 'Run CodeQL Autobuild'
+    # Read the generated environment variables and set them for subsequent commands.
+    json=$(cat db/temp/tracingEnvironment/start-tracing.json)
+    for key in $(jq -r 'keys[]' <<< "$json"); do
+      value=$(jq -r ".$key" <<< "$json")
+      echo "##vso[task.setvariable variable=$key]$value"
+    done
+  displayName: 'Set CodeQL environment variables'
 
 - script: |
-    ./codeql-runner-linux analyze \
-    --repository Gopalakrishnan997/time-tracker \
-    --github-url https://github.com \
-    --github-auth $(GITHUB_PAT) \
-    --commit $(Build.SourceVersion) \
-    --ref $(Build.SourceBranch)
-  displayName: 'Populate the CodeQL runner databases, analyze them, and upload the results to GitHub.'
+    # Run your Java tests or other build steps.
+    # Replace with your test or analysis commands.
+    echo "Running Java tests"  # Example placeholder command
+  displayName: 'Run Java Tests'
+
+- script: |
+    # Read and clear the generated environment variables to end build tracing.
+    json=$(cat db/temp/tracingEnvironment/end-tracing.json)
+    for key in $(jq -r 'keys[]' <<< "$json"); do
+      value=$(jq -r ".$key" <<< "$json")
+      echo "##vso[task.setvariable variable=$key]$value"
+    done
+  displayName: 'Clear CodeQL environment variables'
+
+- script: |
+    # Finalize the CodeQL database.
+    codeql database finalize db
+  displayName: 'Finalize CodeQL database'
+
+# Other tasks such as codeql database analyze, codeql github upload-results, etc., can be added here.
