@@ -50,8 +50,8 @@ jobs:
 
     - name: Authenticate with Azure DevOps
       run: |
-        echo "//pkgs.dev.azure.com/{organization}/{feed}/_packaging/{feed_name}/maven/v1" > ~/.m2/settings.xml
         mkdir -p ~/.m2
+        echo "//pkgs.dev.azure.com/{organization}/{feed}/_packaging/{feed_name}/maven/v1" > ~/.m2/settings.xml
         echo "<settings><servers><server><id>{feed_name}</id><username>{username}</username><password>${{secrets.AZURE_DEVOPS_TOKEN}}</password></server></servers></settings>" >> ~/.m2/settings.xml
       env:
         AZURE_DEVOPS_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }}
