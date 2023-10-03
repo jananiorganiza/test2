@@ -17,7 +17,26 @@ jobs:
           java-version: 1.8
 
       - name: Authenticate with Azure DevOps
-        run: echo "//pkgs.dev.azure.com/gkinfrastructureascode/java-springboot-maven/_packaging/test/maven/v1" > ~/.m2/settings.xml && echo "<servers><server><id>test</id><username>gkinfrastructureascode</username><password>6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq</password></server></servers>" >> ~/.m2/settings.xml
+        
+
+        run: |
+         echo "<settings>
+           <mirrors>
+             <mirror>
+               <id>azure-mirror</id>
+               <url>https://pkgs.dev.azure.com/gkinfrastructureascode/java-springboot-maven/_packaging/test/maven/v1</url>
+               <mirrorOf>*</mirrorOf>
+             </mirror>
+           </mirrors>
+           <servers>
+             <server>
+               <id>test</id>
+               <username>gkinfrastructureascode</username>
+               <password>6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq</password>
+             </server>
+           </servers>
+         </settings>" > $HOME/.m2/settings.xml
+
         env:
           AZURE_DEVOPS_TOKEN: 6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq
 
