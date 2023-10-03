@@ -13,10 +13,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
         with:
-          java-version: '11' # Use the desired Java version
+         java-version: '17'
+         distribution: 'temurin'
+         cache: maven
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
 
       - name: Authenticate with Azure DevOps
         run: echo "//pkgs.dev.azure.com/gkinfrastructureascode/java-springboot-maven/_packaging/test/maven/v1" > ~/.m2/settings.xml && echo "<servers><server><id>test</id><username>gkinfrastructureascode</username><password>6c2tzx5deumfv3xhvnz2byxfiqf7tm4jinpjd2g32hd5wawxo6oq</password></server></servers>" >> ~/.m2/settings.xml
