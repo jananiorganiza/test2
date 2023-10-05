@@ -32,6 +32,8 @@ steps:
 
 - script: |
     mv /home/vsts/work/1/s/pom.xml $(codeql_path)
+    mv /home/vsts/work/1/s/core/pom.xml $(codeql_path)
+    mv /home/vsts/work/1/s/web/pom.xml $(codeql_path)
     cd $(codeql_path)
     # ./codeql database create java-database --language=java --command='mvn clean package' 
     ./codeql database create java-database --language=java
