@@ -21,7 +21,13 @@
         <checkstyle.version>2.17</checkstyle.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+<dependencies>  
+    <dependency>
+         <groupId>org.springframework.samples</groupId>
+         <artifactId>spring-petclinic</artifactId>
+         <version>4.0.0-SNAPSHOT</version>
+</dependency>
+</dependencies>
     <modules>
         <module>core</module>
         <module>web</module>
